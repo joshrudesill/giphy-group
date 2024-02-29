@@ -3,7 +3,6 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "redux-saga/effects";
-
 function* test() {
   console.log("Hello from test saga");
 }
@@ -45,24 +44,68 @@ function* fetchCats() {
   try {
     const result = yield axios.get("/api/categories");
     yield put({ type: "REFRESH_CATS", payload: result.data });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 }
 
 function* postFav(action) {
-  try{
-    yield axios.post("/api/favorites", {name: action.payload.name, url: action.payload.url, category: action.payload.category });
-    yield put({ type: "FETCH_FAV"});
-  } catch(e) {
-    console.log(e)
+  try {
+    yield axios.post("/api/favorites", {
+      name: action.payload.name,
+      url: action.payload.url,
+      category: action.payload.category,
+    });
+    yield put({ type: "FETCH_FAV" });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* updateFavCat(action) {
+  try {
+    yield axios.put(`/api/favorites/${action.payload.id}`, {
+      category: action.payload.category,
+    });
+    yield put({ type: "FETCH_FAV" });
+  } catch (e) {
+    console.log(e);
+  }
+}
+function* deleteFav(action) {
+  try {
+    yield axios.delete(`/api/favorites/${action.payload.id}`);
+    yield put({ type: "FETCH_FAV" });
+  } catch (e) {
+    console.log(e);
+  }
+}
+function* getGif(action) {
+  try {
+    const result = yield axios.get("/api/favorites/gif", {
+      params: {
+        t: action.payload,
+      },
+    });
+    yield put({
+      type: "SET_SEARCH_RES",
+      payload: {
+        url: result.data.data.images.original.webp,
+        name: result.data.data.title,
+      },
+    });
+  } catch (e) {
+    console.log(e);
   }
 }
 
 function* rootSaga() {
   yield takeLatest("FETCH_FAV", fetchFavs);
   yield takeLatest("FETCH_CATS", fetchCats);
-  yield takeLatest("POST_FAV", postFav)
+  yield takeLatest("POST_FAV", postFav);
+  yield takeLatest("UPDATE_FAV_CAT", updateFavCat);
+  yield takeLatest("DELETE_FAV", deleteFav);
+  yield takeLatest("GET_GIF", getGif);
 }
 
 const store = createStore(

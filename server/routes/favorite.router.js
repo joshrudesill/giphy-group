@@ -1,8 +1,23 @@
 const express = require("express");
 const pool = require("../modules/pool");
-
+const axios = require("axios");
 const router = express.Router();
+require("dotenv").config();
 
+router.get("/gif", async (req, res) => {
+  try {
+    const result = await axios.get("http://api.giphy.com/v1/gifs/random", {
+      params: {
+        api_key: process.env.GIPHY,
+        tag: req.query.t,
+        rating: "r",
+      },
+    });
+    res.send(result.data);
+  } catch (e) {
+    console.error(e);
+  }
+});
 // return all favorite images
 router.get("/", (req, res) => {
   const sql = `
