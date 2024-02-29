@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Search() {
@@ -7,6 +7,12 @@ export default function Search() {
   const categories = useSelector((state) => state.categories);
   const [search, setSearch] = useState("");
   const [cat, setCat] = useState(0);
+
+  useEffect(() => {
+    if (categories.length > 0){
+    setCat(categories[0].id)
+    }
+  }, [categories])
   return (
     <>
       <input value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -21,7 +27,7 @@ export default function Search() {
 
       {searchRes.url ? (
         <>
-          <select onChange={(e) => setCat(e.target.value)} value={cat.id}>
+          <select onChange={(e) => setCat(e.target.value)} value={cat}>
             {categories.map((c) => (
               <option value={c.id}>{c.name}</option>
             ))}
