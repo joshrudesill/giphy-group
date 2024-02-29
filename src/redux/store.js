@@ -41,8 +41,28 @@ function* fetchFavs() {
   }
 }
 
+function* fetchCats() {
+  try {
+    const result = yield axios.get("/api/categories");
+    yield put({ type: "REFRESH_CATS", payload: result.data });
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+function* postFav(action) {
+  try{
+    yield axios.post("/api/favorites", {name: action.payload.name, url: action.payload.url, category: action.payload.category });
+    yield put({ type: "FETCH_FAV"});
+  } catch(e) {
+    console.log(e)
+  }
+}
+
 function* rootSaga() {
   yield takeLatest("FETCH_FAV", fetchFavs);
+  yield takeLatest("FETCH_CATS", fetchCats);
+  yield takeLatest("POST_FAV", postFav)
 }
 
 const store = createStore(
