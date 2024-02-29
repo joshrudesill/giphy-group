@@ -5,6 +5,7 @@
 # React Build Directory
 build/
 
+server/modules/pool.js
 # Logs
 logs
 *.log

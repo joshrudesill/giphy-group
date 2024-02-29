@@ -24,3 +24,10 @@ INSERT INTO "categories"
 -- categories via foreign key. This is a one-to-many relationship:
 --    One favorite has one category.
 --    One category can be had by many favorites.
+
+CREATE TABLE "favorites" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR (100) NOT NULL,
+  "url" VARCHAR (100) NOT NULL,
+  "category" INTEGER REFERENCES "categories"
+);
