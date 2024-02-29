@@ -28,6 +28,6 @@ INSERT INTO "categories"
 CREATE TABLE "favorites" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR (100) NOT NULL,
-  "url" VARCHAR (100) NOT NULL,
+  "url" VARCHAR NOT NULL,
   "category" INTEGER REFERENCES "categories"
 );

@@ -27,6 +27,8 @@ const search = (state = {}, action) => {
   switch (action.type) {
     case "SET_SEARCH_RES":
       return action.payload;
+    case "RESET_SEARCH_RES":
+      return {};
   }
   return state;
 };
@@ -56,6 +58,7 @@ function* postFav(action) {
       url: action.payload.url,
       category: action.payload.category,
     });
+    yield put({ type: "RESET_SEARCH_RES" });
     yield put({ type: "FETCH_FAV" });
   } catch (e) {
     console.log(e);

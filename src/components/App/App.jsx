@@ -19,7 +19,7 @@ function App() {
         <Route path='/search'>
           <Search />
         </Route>
-        <Route>
+        <Route path='/favorites'>
           <Favorites />
         </Route>
       </HashRouter>

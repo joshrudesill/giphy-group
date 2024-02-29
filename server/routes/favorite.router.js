@@ -21,7 +21,7 @@ router.get("/gif", async (req, res) => {
 // return all favorite images
 router.get("/", (req, res) => {
   const sql = `
-  SELECT favorites.id, favorites.name, favorites.url, categories.name as category_name FROM "favorites" 
+  SELECT favorites.id, favorites.name, favorites.url, categories.name as category_name, categories.id as category_id FROM "favorites" 
   LEFT JOIN "categories" ON "favorites"."category" = "categories"."id" 
   ORDER BY "categories"."name" ASC;`;
   pool

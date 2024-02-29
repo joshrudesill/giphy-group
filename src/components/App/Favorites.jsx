@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+
 export default function Favorites() {
-  return <></>;
+  const favorites = useSelector((state) => state.favorites);
+  return <>{JSON.stringify(favorites)}</>;
 }
