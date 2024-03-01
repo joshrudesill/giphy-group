@@ -3,11 +3,11 @@ import FavoriteItem from "./FavoriteItem";
 
 export default function Favorites() {
   const favorites = useSelector((state) => state.favorites);
-  return <>
-      <p>
-        {favorites.map(fav => (
-          <FavoriteItem {...fav}/>
-        ))}
-      </p>
-  </>;
+  return (
+    <div className='flex flex-row gap-2 flex-wrap justify-center'>
+      {favorites.map((fav) => (
+        <FavoriteItem {...fav} />
+      ))}
+    </div>
+  );
 }
