@@ -23,13 +23,22 @@ export default function FavoriteItem({
       <img src={url} className='object-scale-down h-56 w-80 bg-slate-200' />
       <div className='flex flex-row justify-center pt-2'>
         {!isChangingCategory ? (
-          <button
-            onClick={() => setIsChangingCategory(true)}
-            type='button'
-            className='text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 shadow-lg shadow-lime-500/50  font-medium rounded-lg text-sm px-4 py-2 text-center mb-2'
-          >
-            Change Category
-          </button>
+          <>
+            <button
+              onClick={() => setIsChangingCategory(true)}
+              type='button'
+              className='text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 shadow-lg shadow-lime-500/50  font-medium rounded-lg text-sm px-4 py-2 text-center mb-2 me-2'
+            >
+              Change Category
+            </button>
+            <button
+              onClick={() => dispatch({ type: "DELETE_FAV", payload: { id } })}
+              type='button'
+              className='text-gray-900 bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 shadow-lg shadow-orange-500/50  font-medium rounded-lg text-sm px-4 py-2 text-center mb-2'
+            >
+              Delete
+            </button>
+          </>
         ) : (
           <>
             <select
@@ -47,6 +56,7 @@ export default function FavoriteItem({
                   type: "UPDATE_FAV_CAT",
                   payload: { id: id, category: cat },
                 });
+                setIsChangingCategory(false);
               }}
               className='text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-2 py-1.5 text-center me-1 mb-2 ms-1'
             >

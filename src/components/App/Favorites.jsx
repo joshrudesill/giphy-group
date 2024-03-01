@@ -6,7 +6,7 @@ export default function Favorites() {
   return (
     <div className='flex flex-row gap-2 flex-wrap justify-center'>
       {favorites.map((fav) => (
-        <FavoriteItem {...fav} />
+        <FavoriteItem key={fav.id} {...fav} />
       ))}
     </div>
   );
